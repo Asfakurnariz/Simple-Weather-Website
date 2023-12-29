@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Weather App in JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="weather">
+            <form onsubmit="getWeather(event)">
+                <input type="text" id="city" placeholder="Enter City Name" />
+                <!-- <input type="submit" value="Get Weather" /> -->
+                <button class="btn" type="submit" value="Get Weather">Get Weather</button>
+            </form>
+            <div class="text" id="result"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function getWeather(event) {
+            event.preventDefault();
+            let city = document.getElementById("city").value;
+
+            // 91be5c0a1258b9bab8bceb7caf2376a2
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=91be5c0a1258b9bab8bceb7caf2376a2`;
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    let temp = data.main.temp - 273.15;
+                    temp = temp.toFixed(2);
+                    console.log(data);
+                    document.getElementById("result").textContent = `Weather in ${city} is ${temp}°C`;
+                })
+                .catch((error) => {
+                    console.log("Error:", error);
+                    document.getElementById("result").textContent = "Error retrieving weather data.";
+                });
+        }
+    </script>
+</body>
+
+</html>
